@@ -38,6 +38,18 @@ def get_user_name(name):
     db = dataset.connect('sqlite:///nerting_db.db')
     return jsonify(db['User'].find_one(name=name))
 
+@app.route('/update/<id>/', methods=['PUT'])
+def update_user(id):
+    print(request.json['name'])
+    print(request.json['passwd'])
+
+    db = dataset.connect('sqlite:///nerting_db.db')
+    db['User'].update(dict(id=id,
+                           name=request.json['name'],
+                           passwd=request.json['passwd']), ['id'])
+
+    return get_user(id)
+
 
 if __name__ == "__main__":
     app.run(debug=True)
