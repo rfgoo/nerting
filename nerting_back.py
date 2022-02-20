@@ -18,7 +18,7 @@ def add_users():
                     "Sattus": status})
 
 
-@app.route('/get', methods=['GET'])
+@app.route('/get_all', methods=['GET'])
 def get_users():
     db = dataset.connect('sqlite:///nerting_db.db')
     user1 = []
@@ -27,10 +27,16 @@ def get_users():
     return jsonify(user1)
 
 
-@app.route('/get/<id>/', methods=['GET'])
+@app.route('/get_id/<id>/', methods=['GET'])
 def get_user(id):
     db = dataset.connect('sqlite:///nerting_db.db')
     return jsonify(db['User'].find_one(id=id))
+
+
+@app.route('/get_name/<name>/', methods=['GET'])
+def get_user_name(name):
+    db = dataset.connect('sqlite:///nerting_db.db')
+    return jsonify(db['User'].find_one(name=name))
 
 
 if __name__ == "__main__":
